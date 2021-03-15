@@ -1,0 +1,114 @@
+<style type="text/css">
+.row #publicchat{
+  background-color: lavenderblush;
+  border:none;
+  margin-bottom: 20px;
+  margin-left:5%;
+  margin-top: 5px;
+  text-align: left;
+  /*display: inline;*/
+  border-radius: 5px;
+  width: 75%;
+  height: 80px;
+  /*border: 2px solid #2ecc71; */
+  outline: none;
+  color: black;
+  cursor: pointer;
+  
+}
+#creatingchat{
+  width: 80%;
+  cursor: pointer;
+  background-color:lavenderblush;
+  margin-left: 5%;
+
+}
+/**/
+.public_chats_header{
+
+  color:#ffffff;
+  font-size: 38px;
+  font-style: italic;
+  text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;
+  text-decoration: none;
+  font-weight: bolder;
+}
+.chat_row{
+  color: black;
+  background-color: #ffffff;
+  width: 80%;
+  margin-left: 7%;
+  border-radius: 20px 40px 0px 20px;
+
+}
+.navbar-message{
+  background-color: #E0FFFF;
+  margin-left: 35%;
+  border-radius: 20px 40px 0px 20px;
+}
+.input-group-text{
+  color:red;
+  border-radius: 10px 0 0 10px;
+}
+#public_msg{
+  border:3px solid blue;
+  background-color: #E0FFFF;
+  border-radius: 20px 0 0 20px;
+  border-right: none;
+  padding-left: -20px;
+}
+#send_publichat{
+  border-radius: 24px;
+  margin-left: -20px;
+  padding-left: 20px;
+}
+#send_publichat:hover{
+  background-color: green;
+
+}
+</style>
+<a type="button" class="close text-danger pr-5" href="{% url 'Tour:load' %}" style="font-size: 40px;font-weight: bolder; color: red;text-decoration: none;">&times;</a>
+<div class="col-12 text-center"><span class=" public_chats_header text-center">public chats</span></div>
+{% if public_chats %}
+   {% for chat in public_chats %}
+    <div class="row chat_row  mb-3">
+         <div class="col-12 pl-5 pt-1 text-primary"><i class="fa fa-user mr-2"></i>{{  chat.user.profile.firstname }}{{ ' '}} {{ chat.user.profile.secondname }}</div>
+         <div class="col-12 pl-5 text-body ">{{ chat.text }}</div>
+         <div class="col-12 text-right pr-5 text-body small">{{ chat.time_sent }}</div>
+    </div>
+    {% endfor %}
+  {% else %}
+  <p> no chats available</p>
+{% endif %}
+<div class="row " >
+  <div class="navbar-message   navbar-dark fixed-bottom w-50  mb-2">
+    <form  method="POST" action="{% url 'Tour:sending_chat' %}">
+      {% csrf_token %}
+      <div class="input-group  ">
+          <input type="text" class="form-control pt-4 pb-4 " placeholder="Write a message" id="public_msg"name="message">
+          <div class="input-group-append">
+    <button class="btn btn-info" type="submit" id="send_publichat">send</button>
+  </div>
+  </div>
+    </form>
+  
+</div>
+</div>
+  
+   <!-- 
+    <div class="row" id="publicchat">
+        <div class="col-md-12" style="color: blue;"><span><i class="fa fa-user"></i></span>{{  chat.user.username }}</div>
+        <div class="col-md-12">{{ chat.text }}</div>
+        <div class="col-md-12" style="text-align: right;font-size: 12px;">{{ chat.time_sent }}</div>
+      
+    </div>
+    
+  
+  
+  <div class="" id="creatingchat">
+    <form class="form-group" method="POST" action="{% url 'Tour:sending_chat' %}">
+      {% csrf_token %}
+      <input type="text" name="message" placeholder="write a message here" class="fixed-bottom" style="width: 40%;background-color: lavenderblush;height: 3em; border-radius: 5px; border: 2px solid blue; margin-left: 40% ">
+      <button type="submit" style="color: white;margin-left: -40px;background-color: blue;" ><span><i class="fa fa-arrow-alt-circle-right fa-lg"></i></span></button>
+    </form>
+  </div>-->

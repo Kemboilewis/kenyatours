@@ -1,0 +1,48 @@
+
+<div>
+{% if read.parent %}
+<div class="card"style="background-color: #ebeef8;width: 50%">
+	<div class="card-header font-weight-bold"><label class="lables" style="margin-right: 5%;">SUBJECT:</label>{{ read.parent.subject }} </div>
+	<div class="card-body">
+		<div class="card-title"><label class="lables" style="margin-right: 5%;">date sent</label>{{ read.date_sent }}  </div>
+		<div class="card-title"><label class="lables"style="margin-right: 5%;">SENDER:</label>{{ read.sender }}</div>
+		<div class="card-text mb-5"><label class="lables">INITIAL MESSAGE:</label><br>{{ read.parent.text}}</div>
+		<div class="card-text mb-5"><label class="lables">MESSAGE:</label><br>{{ read.text }}</div>
+		<div class="card-link">
+		<form method="POST" action="{% url 'Tour:send_replies' %}">
+			{% csrf_token %}
+			<input type="hidden" name="parent" value="{{ read.id }}">
+	        <input type="hidden" name="receiver" value="{{ read.sender}}">
+	        <input type="hidden" name="subject" value="{{ read.subject }}">
+	        <label for="text" >REPLY</label>
+	        <textarea type="text" name="message"class="form-control" placeholder="Type reply here"></textarea>
+	        <button type="submit" class="btn btn-success">send</button>
+		</form>
+	</div>
+	</div>
+</div>
+</div>
+{% else %}
+<div class="card" style="background-color: #ebeef8;width: 50%">
+	<div class="card-header font-weight-bold">
+		<label class="lables" style="margin-right: 5%;"> SUBJECT:</label>{{ read.subject }}</div>
+	<div class="card-body">
+		<div class="card-title"><label class="lables" style="margin-right: 5%;">date sent</label>{{ read.date_sent }}  </div>
+		<div class="card-title"><label class="lables" style="margin-right: 5%" >SENDER:</label>{{ read.sender }}</div>
+		<div class="card-text mb-5"><label class="lables">MESSAGE</label ><br> {{ read.text }}</div>
+		<div class="card-link">
+		<form method="POST" action="{% url 'Tour:send_replies' %}">
+			{% csrf_token %}
+			<input type="hidden" name="parent" value="{{ read.id }}">
+	        <input type="hidden" name="receiver" value="{{ read.sender}}">
+	        <input type="hidden" name="subject" value="{{ read.subject }}">
+	        <label for="text" >REPLY</label>
+	        <textarea type="text" name="message"class="form-control" placeholder="Type reply here"></textarea>
+	        <button type="submit" class="btn btn-success">send</button>
+		</form>
+	</div>
+	</div>
+	
+</div>
+{% endif %}
+</div>

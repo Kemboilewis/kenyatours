@@ -1,0 +1,23 @@
+    {% extends 'Tour/base.html'%}
+    {% block css %}
+    {% endblock %}
+    {% block content %}
+
+    <div class="row">
+                    {% for car in cars %}
+                        <div class="col-md-3 mx-auto">
+                            <div class="card" style="width:400px; margin-right:250px;">
+                                <img class="card-img-top" src="{{ car.car_image }}" alt="Card image" height="200px">
+                                <div class="card-body">
+                                    <h4 class="card-title" style="color:mediumseagreen">{{ car.name}}</h4>
+                                    <p class="card-text">{{ car.price }}</p>
+                                    <a href="{% url 'Tour:car_details' car_id=car.id %}"class="btn btn-primary" id="read More">interested</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+    </div>
+
+    {% endblock %}
+    {% block js %}
+    {% endblock %}

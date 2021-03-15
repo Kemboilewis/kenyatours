@@ -1,0 +1,281 @@
+
+/*homepage*/
+.search_title{
+  color: #000000;
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+}
+.form-inline input{
+    width: 250px !important;
+    border-radius: 24px;
+}
+.btn-search{
+  border-radius:20px;
+}
+.dashboard-stat {
+  display: block;
+  padding: 30px 15px;
+  text-align: right;
+  position: relative;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  border-radius: 14px;
+  color:white ;
+}
+.dashboard-stat:hover{
+opacity: 0.8;
+text-decoration: none;
+color:#000000;
+}
+
+.dashboard-stat .number {
+  font-size: 28px;
+  display: block;
+  padding-right: 10px;
+}
+
+.dashboard-stat .bg-icon {
+  position: absolute;
+  font-size: 80px;
+  opacity: 0.8;
+  left: 0;
+  padding-left: 10px;
+  bottom: 0;
+}
+.news_card{
+  border-radius: 24px;
+}
+.news_card img{
+  border-radius: 24px 24px 0 0;
+}
+#readmore{
+  border-radius: 10px;
+}
+/*hotels*/
+.hotelsearch_header{
+  color: #000000;
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+  font-size: 22px;
+}
+#hotel_search{
+  border-radius: 10px;
+  background-color: green;
+  color:#ffffff;
+}
+#hotel_name_search{
+  border-radius: 10px;
+  background-color: green;
+  color:#ffffff;
+}
+.featured_header{
+  text-align: center;
+  font-weight: bolder;
+}
+.hotel_card{
+border-radius: 24px;
+}
+.hotel_card img{
+  border-radius: 24px 24px 0 0 ;
+}
+.hotel_btn{
+  background-color:green;
+  color: #ffffff;
+  border-radius: 10px;
+}
+/*guidepage*/
+
+
+/**/
+.guide_image{
+  height: 150px;
+  width: 150px;
+  margin: auto;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.guide_image img{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  height: 150px;
+  width: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 1px solid #ddd;
+}
+.guide_info{
+  margin:auto;
+  text-align: center;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 50px;
+  background-color: #ffffff;
+}
+#available_guides a{
+padding-top: 13px;
+padding-bottom: 13px;
+border-radius: 24px;
+text-decoration: none;
+  font-weight: bold;
+  font-size: 18px;
+  background-color: green;
+  transition: 0.2s;
+  margin-right: 0;
+  color:#ffffff;
+}
+div #available_guides a:hover{
+  background-color: tomato;
+  color:black;
+
+}
+.notbooked{
+  background-color: #00CED1;
+  font-size: 18px;
+  transition:0.2s;
+  margin:0;
+  color:#ffffff;
+  font-weight: bold;
+
+}
+#touristnotification .btn{
+padding-top: 13px;
+padding-bottom: 13px;
+border-radius: 24px;
+  background-color: #00CED1;
+  font-size: 18px;
+  transition:0.2s;
+  margin:0;
+  color:#ffffff;
+  font-weight: bold;
+
+}
+#touristnotification .btn:hover{
+  background-color: tomato;
+  color:black;
+}
+.success{
+  color:green;
+  text-transform: uppercase;
+  font-weight: bolder;
+  font-size: 18px;
+}
+.danger{
+  color:red;
+  text-transform: uppercase;
+  font-weight: bolder;
+  font-size: 18px;
+}
+.pending{
+  color:black;
+  text-transform: uppercase;
+  font-weight: bolder;
+  font-size: 18px;
+}
+#completedtours{
+padding-top: 13px;
+padding-bottom: 13px;
+border-radius: 24px;
+  background-color: grey;
+  font-size: 18px;
+  transition:0.2s;
+  margin:0;
+  color:#ffffff;
+  font-weight: bold;
+
+}
+#completedtours:hover{
+  background-color: tomato;
+  color:black;
+
+}
+.message_link {
+text-decoration: none;
+color:blue;
+}
+.message_link:hover{
+color:green;
+text-decoration: none;
+}
+.book_btn{
+background-color: tomato;
+border-radius: 20px;
+}
+.book_btn:hover{
+background-color: green;
+color: #ffffff;
+
+}
+.modal-content{
+background-color: #E0FFFF;
+margin-top: 170px;
+border-radius: 30px;
+}
+.modal-title{
+font-size: 18px;
+font-weight: bold;
+}
+.close{
+font-size: 40px;
+font-weight: bold;
+color: red;
+}
+.button_close{
+margin-right: 0;
+margin-left: 60%;
+border-radius: 24px;
+color: #ffffff;
+background-color: red;
+}
+/*
+.footer-list{
+    list-style: none;
+    margin-left: 460px;
+}
+.dashboard-stat-2 {
+  display: block;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e5e5;
+  border-radius: 4px;
+}
+
+.dashboard-stat-2 .stat-content {
+  padding: 20px 15px 15px;
+  text-align: center;
+  position: relative;
+}
+
+.dashboard-stat-2 .number {
+  font-size: 28px;
+  display: block;
+}
+
+.dashboard-stat-2 .stat-footer {
+  background: #fff;
+  color: #292929;
+  text-align: center;
+  display: block;
+  padding: 8px;
+  font-size: 90%;
+}
+
+.dashboard-stat-2:hover {
+  background: #292929 !important;
+}
+
+@media (max-width: 768px) {
+  .dashboard-stat {
+    margin-bottom: 10px;
+  }
+  .dashboard-stat-2 {
+    margin-bottom: 10px;
+  }
+  .footer-list{
+      margin-left: 20px;
+  }
+}
+.section {
+  padding: 30px 0;
+}
+.footer{
+    margin-bottom: 0;
+}
+*/

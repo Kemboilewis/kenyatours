@@ -1,0 +1,177 @@
+    {% extends 'Tour/base.html' %}
+    {% load static %}
+    {% block content %}
+        <div>
+            <br>
+            <div class=" container-fluid ">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h3 class="hotelsearch_header">Click here to Search Hotel Per City:</h3>
+                        <form class="form-inline" action="#" method="POST">
+                            {% csrf_token %}
+                            <span class="btn-label btn-label-right"><i class="fa fa-search fa-2x"></i></span>
+                            <select id="city" class="form-control" style="width: 250px;">
+                                {% for c in city %}
+                                    <option>{{ c }}</option>
+                                {% endfor %}
+                            </select>
+                            <button type="submit" name="hotelsearch" id="hotel_search" class="btn ml-2" style="">Submit</button>
+                        </form><br>
+                    </div>
+                    <div class="col-sm-6">
+                        <h3 class="hotelsearch_header">Click here to Search Per Hotel:</h3>
+                        <form class="form-inline" action="#" method="POST">
+                            {% csrf_token %}
+                            <span class="btn-label btn-label-right"><i class="fa fa-search fa-2x"></i></span>
+                            <select id="hotel_name" class="form-control" style="width: 250px;">
+                                {% for h in hotelnames %}
+                                    <option>{{ h }}</option>
+                                {% endfor %}
+                            </select>
+                            <button type="submit"  id="hotel_name_search" class="btn ml-2" style="">Submit</button>
+                        </form><br>
+                    </div>
+                </div>
+                <div class="row" id="showhotel">
+
+                </div>
+                <div class="row" id="showtown">
+
+                </div>
+                <div class="col-md-auto mt-5">
+                    <h2 style="" class="featured_header">Featured Hotels:</h2>
+                </div>
+                <div class="row mb-5">
+                    {% for resort in resorts %}
+                        <div class="col-md-3 mx-auto mt-2 mb-1">
+                            <div class="card hotel_card" >
+                                <img class="card-img-top" src="{{ resort.hotel_image.url }}" alt="Card image">
+                                <div class="card-body">
+                                    <h6 class="card-title">{{ resort.hotel_name }}</h6>
+                                    <p class="card-text">Price Per night  {{ resort.price }}</p>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <a href="#" class="btn hotel_btn">check</a>
+                                        </div>
+                                        <div class="col-6">
+                                            <a href="#" class="btn hotel_btn bg-info" >Interested</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            <br>
+            <div class="row">
+                <div class="col-12 " style="text-align: center;">
+                <h2 style="text-align: center;" class="featured_header">All Available Hotels:</h2>
+               </div>
+                <div class="table-responsive pl-2 pr-2">
+                <table class="table table-hover table-striped bg-light">
+                    <thead class="thead-dark">
+                       <tr>
+                        <th>Hotel Name</th>
+                        <th>Location:</th>
+                        <th>Town:</th>
+                        <th>Price Per Night:</th>
+                        <th>Website:</th>
+                        <th>Interested</th>
+                        <th>Book</th>
+                      </tr>
+                    </thead>
+                 <tbody>
+                    {% for hotel in resorts %}
+                        <tr>
+                            <td>{{ hotel.hotel_name }}</td>
+                            <td>{{ hotel.location }}</td>
+                            <td>{{ hotel.town }}</td>
+                            <td>{{ hotel.price }}</td>
+                            <td><a href="{{ hotel.website }}">{{ hotel.website }}</a></td>
+                            <td><button class="btn btn-info btn-group-lg">Interested</button></td>
+                            <td><button class="btn btn-success btn-group-lg">Book</button></td>
+                        </tr>
+                    {% endfor %}
+                 </tbody>
+                </table>
+            </div>
+        </div>
+               <!-- <div class="row">
+                    <div class="col-md-2">
+
+                    </div>
+                    <div class="col-md-8">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th class="text-center" colspan="7">
+                                    ALL AVAILABLE HOTELS
+                                </th>
+                            </tr>
+                            <tr>
+                                <th>Hotel Name</th>
+                                <th>Location:</th>
+                                <th>Town:</th>
+                                <th>Price Per Night:</th>
+                                <th>Website:</th>
+                                <th>Interested</th>
+                                <th>Book</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for hotel in resorts %}
+                                <tr>
+                                    <td>{{ hotel.hotel_name }}</td>
+                                    <td>{{ hotel.location }}</td>
+                                    <td>{{ hotel.town }}</td>
+                                    <td>{{ hotel.price }}</td>
+                                    <td><a href="{{ hotel.website }}">{{ hotel.website }}</a></td>
+                                    <td><button class="btn btn-warning btn-group-lg">Interested</button></td>
+                                    <td><button class="btn btn-success btn-group-lg">Book</button></td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-2">
+
+                    </div>
+                </div>-->
+            </div>
+        </div>
+
+    {% endblock %}
+    {% block js %}
+        <script>
+            var city = document.getElementById('city');
+            var hotel=document.getElementById('hotel_name');
+            $(document).ready(
+                function() {
+                    //when the user clicks on the submit button, we load the url and pass the town value
+                    //the user entered in the input
+
+                    $("#hotel_search").click(
+                        function() {
+                            $('#showhotel').hide();
+                            $("#showtown").load("{% url 'Tour:hotelsearch' %}", {
+                                city: city.value
+                            });
+                            return false;
+                        }
+                    );
+                    $("#hotel_name_search").click(
+                        function() {
+                            $('#showtown').hide();
+                            $("#showhotel").load("{% url 'Tour:hotelname' %}", {
+                                hotel:hotel.value
+                            });
+                            return false;
+                        }
+                    );
+                }
+            );
+        </script>
+
+    {% endblock %}
+
+

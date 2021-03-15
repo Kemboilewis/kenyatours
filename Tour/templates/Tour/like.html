@@ -1,0 +1,54 @@
+    <style type="text/css">
+        .user{
+            color: blue;
+            word-spacing: 5px;
+        }
+        .sender{
+            font-size: 20px;
+            margin-left: 20px;
+            margin-bottom: -20px;
+            align-content: center;
+        }
+        .date{
+            font-size: 14px;
+            margin-left: 20px;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+        .subject{
+            font-weight: bold;
+            margin-left: 20px;
+            margin-top: 5px;
+
+        }
+        .message{
+            margin-top: -5px;
+        }
+     
+        .label{
+            margin-right: 7px;
+        }
+
+
+    </style>
+
+       
+        <div class="form">
+            <div class="singlemessage">
+                <div class="user"><span><i class="fa fa-user-circle fa-2x"></i></span><span class="sender">{{ chat.sender }}</span></div>
+                <div class="date"><label class="label"> date sent:</label><small>{{chat.date_sent }}</small></div>
+                <div class="subject" style="text-decoration: underline;"> <label class="label">subject:</label>{{ chat.subject }}</div>
+                <div class="message">{{ chat.text }}</div>
+                <div>
+                    <form class="form-group" method="POST" action="{% url 'Tour:send_replies' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="parent" value="{{ chat.id }}">
+                        <input type="hidden" name="receiver" value="{{ chat.sender}}">
+                        <input type="hidden" name="subject" value="{{ chat.subject }}">
+                        <label class="label" style="margin-top: 20px;margin-left: 20px;font-weight: bold;margin-bottom: -10px;">reply</label><br>
+                        <textarea name="message" placeholder="Reply here" style="width: 100%;"></textarea>
+                        <button type="submit" class="btn btn-primary">send</button>
+                    </form>
+                </div>
+                </div>   
+    </div>

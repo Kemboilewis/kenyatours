@@ -1,0 +1,316 @@
+<style type="text/css">
+	/* notification*/
+	#new_request{
+	  color: black;
+	  padding:0;
+	  margin:0;
+	  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	  text-decoration: none;
+	  transform: translate(10px, 10px);
+	  transform: scale(1,1);
+	  background: linear-gradient(to right,#FFFACD,#FFFACD);
+	  border-radius: 24px;
+	}
+	#new_request h3{
+	  color: red;
+	  text-align: center;
+	  font-style: italic;
+	  font-size: 28px;
+	  text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;
+	  text-decoration: none;
+	  font-weight: bolder;
+	  padding:10px 0px 0px;
+	}
+	.tourist_image{
+		margin-right: 0;
+	    /*height: 150px;
+	    width: 150px;
+	    margin: auto;
+	    border-radius: 50%;*/
+	    /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);*/
+	}
+    .tourist_image img{
+        display: block;
+        float: right;
+        height: 200px;
+        width: 200px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 1px solid #ddd;
+    }
+    .guideinfo{
+    	text-align: left;
+    }
+    .details_guide{
+    	color: green;
+    	text-transform: none;
+    	font-size: 16px;
+    	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    	padding-left: 4px;
+    	font-weight: normal;
+    }
+    .info_header{
+    	text-align: center;
+    	font-size: 20px;
+    	padding:5px;
+    	text-decoration: underline;
+    	font-weight: bold;
+    	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    }
+  
+    /* notification-tourist*/
+
+	.status_header{
+		margin:auto;
+		text-decoration: underline;
+	}
+	.mx-auto{
+		background-color: #00CED1;
+		width: 100%;
+		border-radius: 24px;
+	}
+	.status_header{
+		color:#ffffff;
+		text-align: center;
+		font-size: 18px;
+		font-weight: 500px;
+		font-style: italic;
+	}
+	.status_body{
+		text-align: center;
+	}
+	.guide-info{
+		padding-top: 10px;
+
+	}
+	.info{
+		color:white;
+	}
+	.instructions h4{
+		text-decoration: underline;
+	}
+    .choosensites_header{
+    	margin-left: 20%;
+    	font-size: 20px;
+    	font-weight: bold;
+    	color:green;
+    	font-style:italic;
+    	text-decoration: underline;
+
+    }
+    .action_btn{
+    	width: 200px;
+    	transition:0.3s;
+    	border-radius: 24px;
+    }
+    .action_btn:hover{
+    	width: 250px;
+    	background-color: green;
+    }
+    .guide_action_btn{
+    	width: 200px;
+    	transition:0.3s;
+    	border-radius: 24px;
+    }
+    .guide_action_btn:hover{
+    	background-color: green;
+
+    }
+    .guide_action_btn_decline{
+    	width: 200px;
+    	transition:0.3s;
+    	border-radius: 24px;
+
+    }
+    .guide_action_btn_decline:hover{
+    	background-color: red;
+
+    }
+
+
+</style>
+	
+
+<div><!-- a new request to the tour guide from a tourist -->
+	{% if notification %}
+	{% for n in notification %}
+	<div class="row mt-3" id="new_request">
+		<div class="col-12 pt-2">
+			<h3>your new request</h3>
+		</div>
+		<div class="col-md-6">
+			<div class="col-12 info_header">details for tourist<span class="details_guide">{{ n.tourist.profile.firstname }}{{' '}}{{ n.tourist.profile.secondname }}</span> </div>
+			<div class="row">
+				<div class="col-sm-6 tourist_image">
+				<img src="{{ n.tourist.profile.profile_image.url}}" >
+			</div>
+			<div class="col-sm-6">
+				<div class="guideinfo">
+					<h6>Name:<span class="details_guide">{{ n.tourist.profile.firstname }}{{' '}}{{ n.tourist.profile.secondname }}</span></h6>
+					<div>gender:<span class="details_guide">{{ n.tourist.profile.gender }}</span></div>
+					<div>country:<span class="details_guide">{{ n.tourist.profile.country }},{{' '}}{{ n.tourist.profile.location }}</span></div>
+					<div>Languages:<span class="details_guide">{{ n.tourist.profile.languages }}</span></div>
+					<div>Contact:<span class="details_guide">{{ n.tourist.profile.contact }}</span></div>
+					<div>Bio<br><span class="details_guide">{{ n.tourist.profile.bio }}</span></div>
+				</div>
+			</div>
+		
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="col-12 info_header"style="text-align: left;color: black;">information about the tour</div>
+			<div class="tourist_info">
+				<div class="form-inline">
+					<label for="Arrival" class="mr-sm-2">Arrival Date:</label>
+					<input type="" class="form-control mb-2 mr-sm-2" placeholder="{{ n.arrival }}" >
+				</div>
+				<div class="form-inline">
+					<label for="Arrival" class="mr-sm-2">Departure Date:</label>
+					<input type="" class="form-control mb-2 mr-sm-2" placeholder="{{ n.arrival }}" >
+				</div>
+				<div class="instructions">specifications<br>{{ n.instructions }}
+			</div>
+		</div>
+	</div>
+	<div class="col-md-12">
+		<div class="row">
+			<div class="col-md-4">
+				<h6 class="choosensites_header">sites</h6>
+				<ol>
+				{% for x in n.sites.all  %}
+			
+				<li>{{ x.name }}</li>
+
+				{% endfor %}
+			</ol>
+				
+			</div>
+			<div class="col-md-4">
+				<h6 class="choosensites_header">activities likely to undertake</h6>
+				<ol>
+				{% for y in n.activities.all  %}
+				<li>{{ y.activityName }}</li>
+				{% endfor %}
+			</ol>
+			</div>
+			<div class="col-md-4">
+				<h6 class="choosensites_header">events</h6>
+				<ol>
+				{% for z in n.events.all  %}
+				<li>{{ z.eventName }}</li>
+				{% endfor %}
+			</ol>
+			</div>
+		
+	</div>
+	<div class="d-flex justify-content-center pb-5">
+		<form action="{% url 'Tour:confirm' %}" method="POST">
+			{% csrf_token %}
+			<input type="hidden" name="id" value="{{ n.id }}">
+			<button type="submit" name="choice" value="1" class="btn btn-primary p-3 mr-5 guide_action_btn" >accept</button>
+			<button type="submit" name="choice" value="2" class="btn btn-danger p-3 ml-5 guide_action_btn_decline">decline</button>
+		</form>
+	</div>
+</div>
+</div>
+   {% endfor %}
+   <!-- tourist booking details after succesfully booking a guide -->
+	{% else %}
+	<div class=" mx-auto mt-4" style="" >
+	{% for k in notification_tourist %}
+	<div class="row">
+		<div class="col-sm-12 info_header">
+			<h2>Your booking</h2>
+			{% if k.guide_response == 1 %}
+                <div class="" >booking status:<span class="" style="color:green;">succesful</span></div>
+                {% elif k.guide_response == 2 %}
+                <div class="" >booking status:<span class="" class="" style="color:red;">declined</span></div>
+                {% else %}
+                <div class="" >booking status:<span class="" style="color:goldenrod;">pending</span></div>
+            {% endif %}
+		</div>
+		<div class="col-sm-6">
+			<div class="row">
+				<div class="col-12 info_header" >details for your tour guide<span class="details_guide"> {{ k.touristguide.firstname }} {{ ' ' }}{{ k.touristguide.secondname }}</span> </div>
+			<div class="col-sm-6 tourist_image">
+				<img src="{{ k.touristguide.profile_image.url }}" >
+			</div>
+			<div class="col-sm-6">
+				<div class="guideinfo">
+					<h6>Name:<span class="details_guide">{{ k.touristguide.firstname }} {{ ' ' }}{{ k.touristguide.secondname }}</span></h6>
+					<div>gender:<span class="details_guide">{{ k.touristguide.gender }}</span></div>
+					<div>country:<span class="details_guide"> {{ k.touristguide.country }},{{' '}}{{ k.touristguide.location }}</span></div>
+					<div>Languages:<span class="details_guide">{{ k.touristguide.languages }}</span></div>
+					<div>Bio<br><span class="details_guide">{{ k.touristguide.bio }}</span></div>
+				</div>
+			</div>
+		</div>
+	</div>
+		<div class="col-sm-6">
+			<div class="col-12 info_header"style="text-align: left;color: black;">information about the tour</div>
+			<div class="tourist_info">
+				<div class="form-inline">
+					<label for="Arrival" class="mr-sm-2">Arrival Date:</label>
+					<input type="" class="form-control mb-2 mr-sm-2" placeholder="{{ k.arrival }}" >
+				</div>
+				<div class="form-inline">
+					<label for="Arrival" class="mr-sm-2">Departure Date:</label>
+					<input type="" class="form-control mb-2 mr-sm-2" placeholder="{{ k.arrival }}" >
+				</div>
+				<div class="instructions">specifications<br>{{ k.instructions }}
+			</div>
+		</div>
+		</div>
+		<div class="col-sm-12">
+					<div class="row">
+			<div class="col-md-4">
+				<h6 class="choosensites_header">sites</h6>
+				<ol>
+				{% for x in k.sites.all  %}
+			
+				<li>{{ x.name }}</li>
+
+				{% endfor %}
+			</ol>
+				
+			</div>
+			<div class="col-md-4">
+				<h6 class="choosensites_header">activities likely to undertake</h6>
+				<ol>
+				{% for y in k.activities.all  %}
+				<li>{{ y.activityName }}</li>
+				{% endfor %}
+			</ol>
+			</div>
+			<div class="col-md-4">
+				<h6 class="choosensites_header">events</h6>
+				<ol>
+				{% for z in k.events.all  %}
+				<li>{{ z.eventName }}</li>
+				{% endfor %}
+			</ol>
+			</div>
+		
+	</div>
+		 </div>
+		 
+	</div>
+	
+	<div class="d-flex justify-content-center pb-5">
+		{% if k.guide_response == 1 %}
+		<a href="{% url 'Tour:guidepdf' bookid=k.id %}"  class="btn btn-primary action_btn " >print</a>
+		<form action="{% url 'Tour:archive' %}" method="POST">
+			{% csrf_token %}
+			<input type="hidden" name="id" value="{{ k.id }}">
+			<button type="submit" name="choice" value="True" class="btn btn-danger p-2 ml-5 action_btn">archive</button>
+		</form>
+		{% elif k.guide_response == 2 %}
+		<button type="submit" name="delete" value="True" class="btn btn-danger p-2 ml-5 action_btn">delete</button>
+		{% else %}
+		<a type="submit"  href="{% url 'Tour:guide' %}"  class="btn btn-danger p-2 ml-5 action_btn">close</a>
+	{% endif %}
+	</div>
+{% endfor %}
+</div>
+	{% endif %}
+</div>

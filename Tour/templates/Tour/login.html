@@ -1,0 +1,20 @@
+
+{% load static %}
+{% block content %}
+<div id="login" style="margin-top: -45px;">
+    <form class="box" method="POST" action="{% url 'Tour:loginuser' %}">
+        {% csrf_token %}
+        <img src="{% static 'Tour/images/kenyatours3.png' %}" class="logo" style="background-color: darkgreen;"> 
+        <div class="myerrors">
+            {% for error in messages %}
+                <strong>{{ error }}</strong>
+            {% endfor %}
+        </div>
+        <input type="text" name="username" placeholder="username">
+        <input type="password" name="password" placeholder="Password">
+        <input type="submit" name="login" value="Login">
+
+        <p>&copy;&nbsp;  All Rights Reserved</p>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,85 @@
+
+{% load static %}
+{% block content %}
+<div id="register" style="margin-top: 295px;" class="box">
+    <form class="form-group" method="POST" action="{% url 'Tour:registeruser' %}" data-validate-username-url="{% url 'Tour:validate_username' %}">
+        {% csrf_token %}
+        <img src="{% static 'Tour/images/kenyatours3.png' %}" class="logo" style="background-color: darkgreen;">
+        <div>
+            <div class="row">
+                <div class="col-md-6">
+                    <input class="form-control" pattern=" [a-z]"type="text" name="firstname" placeholder="First name">
+                </div>
+                <div class="col-md-6">
+                    <input class="form-control" type="text" name="secondname" placeholder="Second name">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <select  name="gender" type="text" class="form-control" >
+                        <option value="" disabled selected >select gender</option>
+                        <option value="MALE" >MALE</option>
+                        <option value="FEMALE">FEMALE</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <input class="form-control" type="text" name="country" placeholder="Country Name">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+               <input class="form-control" type="text" name="username" placeholder="username" id="user_name" style="width: 250px;">
+           </div>
+ 
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <input class="form-control" type="password" name="password" id="password" placeholder="Password">
+                </div>
+                <div class="col-md-6">
+                    <input class="form-control" type="password" name="cpassword" id="cpassword" placeholder="Confirm Password" onmouseout="check()">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12" id="passerrors"></div>
+                <div class="col-md-12" id="usererrors"></div>
+            </div>
+        </div>
+        <input type="submit" name="register" value="REGISTER">
+
+        <button onclick='login(); return false;' class="logbtn">Back to Login</button>
+
+        <p>&copy;&nbsp; All Rights Reserved</p>
+    </form>
+</div>
+{% endblock %}
+{% block js %}
+<script>
+    var check = function() {
+        if (document.getElementById('password').value ==
+            document.getElementById('cpassword').value) {
+
+        } else {
+            document.getElementById('passerrors').style.color = 'red';
+            document.getElementById('passerrors').innerHTML = 'The passwords do not match!!';
+        }
+    }
+    $(document).ready(function(){
+        $("#user_name").change(function(){
+            var form = $(this).closest("form");
+            $.ajax({
+                url: form.attr("data-validate-username-url"),
+                data:form.serialize(),
+                dataType: 'json',
+                success: function(data){
+                    if(data.is_taken){
+                        alert(data.error_messagess);
+                    }
+                }
+
+            });
+        });
+
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>your trip details</title>
+	</head>
+	<body>
+		<!--<div>{{ guide }}
+			<hr>
+			{{ guide.firstname }}
+			<hr>
+			{{ guide.gender }}
+			<br>
+			{{ guide.profile_image.url }}
+			<br>
+			{{ guide.profile_image }}
+			<br>
+			{{ guide.profile_image.path }}
+			<img src={{ guide.profile_image.path }} height='200px'>
+		</div>-->
+		<div>{{ your_booking }}
+			<div>company details</div>
+			<img src="{% static 'Tour/images/kenyatours.png' %}" height="200px">
+			<img src="{% static 'Tour/images/kenyatours.png' %}" alt="logo" >
+			<hr>
+			<div >guide details</div>
+			{{ your_booking.touristguide.firstname }} {{ ' ' }}{{ your_booking.touristguide.secondname }}<br>
+	        {{ your_booking.touristguide.gender }}<br>
+	        {{ your_booking.touristguide.country }}<br>
+	        {{ your_booking.touristguide.languages }}<br>
+	        {{ your_booking.touristguide.location }}<br>
+	        {{ your_booking.touristguide.contact }}<br>
+	        {{ your_booking.touristguide.bio }}<br>
+	        <img src="{{ your_booking.touristguide.profile_image.path }}" height="200px">
+
+			<hr>
+			
+			<br>
+			<img src="{{your_booking.touristguide.profile_image.url }}" height='200px'>
+			<img src="{{ your_booking.profile_image.path }}" height='200px'>
+			
+		</div>
+	</body>
+</html>

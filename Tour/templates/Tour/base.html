@@ -1,0 +1,221 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="stylesheet" href="{% static 'Tour/bootstrap/css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'Tour/bootstrap/css/bootstrap.css' %}">
+  <link rel="stylesheet" href="{% static 'Tour/css/css/all.css' %}">
+  <link rel="stylesheet" href="{% static 'Tour/css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'Tour/main.css' %}">
+  <link rel="stylesheet" href="{% static 'Tour/boxicons/css/boxicons.min.css' %}" >  
+
+  {% block css %}
+  <style type="text/css">
+
+    .navigation_container{
+      
+  
+}
+
+  </style>
+
+  {% endblock %}
+  <title>Coolguide</title>
+</head>
+<body>
+  <div class="container-fluid ">
+  <div class="navigation_container">
+    {% if user.is_authenticated %}
+        <nav class="navbar navbar-expand-lg sticky-top " style="background-color: #006400;" >
+          <a class="navbar-brand" href="#" >
+            <img src="{% static 'Tour/images/kenyatours3.png' %}" alt="logo" >
+          </a>
+
+          <!-- Toggler/collapsibe Button -->
+          <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#collapsibleNavbar" style="margin-right: 15px; background-color: darkgreen;">
+            <span  ><i class="fa fa-bars fa-2x" style="color: rgb(205, 133, 63);"></i></span>
+          </button>
+          
+          <!-- Navbar links -->
+          <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav m-xl-auto">
+              {% url 'Tour:home' as url %}
+              <li class="nav-item {% if request.path == url %}bg-primary{% endif %} " >
+                <a class="nav-link {% if request.path == url %}text-body{% endif %} "href="{{ url }}" >Home</a>
+              </li>
+              
+              <li class="nav-item dropdown" id="my_dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                  Sites
+                </a>
+                <div class="dropdown-menu">
+                  {% url 'Tour:sites' as url %}
+                  {% if request.path == url %}
+                  <style type="text/css">#my_dropdown{background-color:blue;}</style>
+                  {% endif %}
+                  <a class="dropdown-item" href="{{ url }}">Wildlife</a>
+                  {% url 'Tour:all_activities' as url %}
+                  {% if request.path == url %}
+                  <style type="text/css">#my_dropdown{background-color:blue;}</style>
+                  {% endif %}
+                  <a class="dropdown-item" href="{{ url }}">Activities</a>
+                  {% url 'Tour:all_events' as url %}
+                  {% if request.path == url %}
+                  <style type="text/css">#my_dropdown{background-color:blue;}</style>
+                  {% endif %}
+                  <a class="dropdown-item" href="{{ url }}">Events</a>
+                  <!--<a class="dropdown-item" href="{% url 'Tour:trip' %}">Plan you trip</a>-->
+                </div>
+              </li>
+              {% url 'Tour:hotels' as url %}
+              <li class="nav-item {% if request.path == url %}bg-primary{% endif %}">
+                <a class="nav-link " href="{{ url }}">Accommodation</a>
+              </li>
+              {% url 'Tour:guide' as url %}
+              <li class="nav-item {% if request.path == url %}bg-primary{% endif %}">
+                <a class="nav-link  " href="{{ url }}">Tour Guide</a>
+              </li>
+              {% url 'Tour:load' as url %}
+              <li class="nav-item {% if request.path == url %}bg-primary{% endif %}">
+                <a class="nav-link " href="{{ url }}">Messages</a>
+              </li>
+               <li class="nav-item">
+                <a class="nav-link " href="#">about</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link " href="#">contact</a>
+              </li>
+                        <!--<li class="nav-item"> 
+                            <a class="nav-link" href="{% url 'Tour:dashboard' %}"> RENTAL CARS</a>
+                          </li>-->
+                        </ul>
+                        <ul class="navbar-nav">
+                          <li class="nav-item dropdown" id="my_dropdown">
+                              <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                              </a>
+                           <div class="dropdown-menu">
+                              <a class="dropdown-item" href="#">profile</a>
+                              <a class="dropdown-item" href="{% url 'Tour:logout' %}">logout</a>
+                          </div>
+                          </li>
+                          {% if user.profile.user_type == "GUIDE" %}
+                          <li class="nav-item " style="background-color: red;color: white;border-radius: 28px ;" >
+                            <a class="nav-link" href="#" style="color: white;text-shadow: none; border-radius: 28px;" >get updates</a>
+                          </li>
+                          {% else %}
+                          <li class="nav-item " style="background-color: red;color: white;border-radius: 28px ;" >
+                            <a class="nav-link" href="#" style="color: white;text-shadow: none; border-radius: 28px;" >become a guide</a>
+                          </li>
+                          {% endif %}
+                        </ul>
+                      </div>
+                      </nav>
+                      <!--
+                      <div class="d-flex justify-content-center mt-0 pt-3 ">
+                      <h4 class="service " style="text-align: center;" >For safe, Convenient and Effective Tour Experience</h4>
+                    </div>
+                    <div class="d-flex justify-content-center ">
+                      <p class="service" style="text-align: center;" >Your happiness is our priority</p>
+                    </div>-->
+                    <div class="user_feedback">
+                  </div>
+                    
+                      {% else %}
+                      <div class="index_nav bg-dark" style="border-radius: 60px 60px 0 0;box-shadow: 0px 12px 5px grey;">
+                      <div class="d-flex justify-content-center mb-0 mt-3 pb-1  " style="border-radius: 60px 60px 0px 0px;">
+                      <h1 class="service pt-2 pb-2" style="color: tomato; font-weight:bolder;text-align: center;font-family:Arial Black, Gadget, sans-serif;text-shadow: 3px 2px black;">Kenya Tours</h1>
+                    </div>
+                    <div class="d-flex justify-content-center bg-dark pb-0">
+                      <p class="service" style="text-align: center;font-family: Comic Sans MS, cursive, sans-serif">welcome to Kenya tours!!</p>
+                    </div>
+                  </div>
+                      
+                        <!--rgb(205, 133, 63)
+                        <li class="nav-item">
+                          <a class="nav-link" href="{% url 'Tour:index' %}">LOGIN</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="{% url 'Tour:index' %}">REGISTER</a>
+                        </li>-->
+                        
+                      
+                      
+                    
+                    
+                    {% endif %}
+                  
+                    
+              {% block content %}
+
+              {% endblock %}
+              {% if user.is_authenticated %}
+              <footer id="footer" class="mt-5">
+            <div class="footer-top ">    
+              <div class="row" >
+                <div class="col-lg-3 col-md-6 ">
+                  <div class="img_footer" style="">
+                  <img src="{% static 'Tour/images/kenyatours3.png' %}" alt="logo" style="">
+                </div>
+                <div class="footer_text" style="">
+                 <p >phone <span class="footer-text" >+254721480230</span></p>
+                 <p >Email<span class="footer-text">info@kenyatours.com</span></p>
+                </div>
+                  
+                </div>
+                <div class="col-lg-5 col-md-6 footer_links">
+                  <h4>Useful Links</h4>
+                  <ul class="">
+                    <li><i class="bx bx-chevron-right"></i> <a  href="{% url 'Tour:home' %}">Home</a></li>
+                    <li><i class="bx bx-chevron-right"></i> <a href="{% url 'Tour:hotels' %}">accommodation</a></li>
+                    <li><i class="bx bx-chevron-right"></i> <a href="{% url 'Tour:sites' %}">wildlife</a></li>
+                    <li><i class="bx bx-chevron-right"></i> <a href="{% url 'Tour:all_activities' %}">activities</a></li>
+                    <li><i class="bx bx-chevron-right"></i> <a href="{% url 'Tour:all_events' %}">Events</a></li>
+                    <li><i class="bx bx-chevron-right"></i> <a href="{% url 'Tour:guide' %}">Tour guide</a></li>
+                    <li><i class="bx bx-chevron-right"></i> <a href="{% url 'Tour:load' %}">messages</a></li>
+                    <li><i class="bx bx-chevron-right"></i> <a href="{% url 'Tour:load' %}">about us</a></li>
+                  </ul>
+                </div>         
+                <div class="col-lg-4 col-md-6 footer-newsletter">
+                  <h4>Join Our Newsletter</h4>
+                  <p>Enter your email to subscribe to our newslettter on latest events,activities and offers</p>
+                  <form action="" method="post">
+                    <input type="email" name="email"><input type="submit" value="Subscribe" class="btn btn-primary">
+                  </form>
+                </div>
+            </div>
+          </div>
+        <div class="container-fluid d-md-flex py-4 footer_footer ">
+          <div class="mr-md-auto text-center text-md-left">
+            <div class="copyright ">
+                &copy; Copyright <strong><span>2020</span></strong>. All Rights Reserved
+            </div>    
+          </div>
+          <div class="social-links text-center text-md-right pt-3 pt-md-0">
+            <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+            <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+            <a href="#" class="instagram" style="color:#3F729B"><i class="bx bxl-instagram"></i></a>
+            <a href="#" class="google-plus" style="color: #4285F4;"><i class="bx bxl-skype"></i></a>
+            <a href="#" class="linkedin" style="color: #fff;"><i class="bx bxl-linkedin"></i></a>
+          </div>
+        </div>
+      </footer>
+      {% else %}
+      {% endif %}
+              
+
+
+
+            </div>
+            </div>
+
+              <script src="{% static 'Tour/js/jquery/jquery-2.2.4.min.js' %}"></script>
+              <script src="{% static 'Tour/bootstrap/js/bootstrap.min.js' %}"></script>
+              <script src="{% static 'Tour/bootstrap/js/bootstrap.bundle.js' %}"></script>
+              <script src="{% static 'Tour/bootstrap/js/bootstrap.js' %}"></script>
+              {% block js %}
+              {% endblock %}
+            </body>
+            </html>

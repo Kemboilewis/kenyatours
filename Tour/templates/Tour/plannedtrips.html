@@ -1,0 +1,108 @@
+{% extends 'Tour/base.html' %}
+{% load static %}
+{% block css %}
+<style>
+div .trip_header{
+  color: white;
+  margin-top: 0px;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  text-decoration: none;
+  transform: translate(10px, 10px);
+  transform: scale(1,1);
+  text-align: center;
+  background: linear-gradient(to right,#FFFACD,#FFFACD);
+
+}
+div .trip_header h1{
+  color: green;
+  font-style: italic;
+  font-size: 50px;
+  text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;
+  text-decoration: none;
+  font-weight: bolder;
+  padding:10px 0px 0px;
+}
+div .trip_header p{
+  text-align: center;
+  font-size: 14px;
+  padding: 0px 20px 20px;
+  font-style: normal;
+  font-weight: normal;
+  color: black;
+  margin-bottom: 0;
+}
+</style>
+{% endblock %}
+{% block content %}
+<div class="trip_header" >
+	<h1 style="color:blue;"> plan your trip</h1>
+	    <p style="color:blue; font-size: 16px;"> The best way to prepare for your trip is to plan.Below is a list of places you may visit and activities you may undertake during your visit in Kenya.Check for your favourites.</p>
+         
+</div>
+<div class="row" style="background-color: #FFFACD; padding:0;margin:0;">
+	<div class="col-md-1">
+		
+	</div>
+	<div class="col-md-10">
+		<div>
+			<h3 style="text-align: left;color: green;">Fill in Your Trip Details Below:</h3>
+			<form action="{% url 'Tour:trip'%}" class="form-group">
+				<div class="form-inline">
+					<label for="Arrival" class="mr-sm-2">Arrival Date:</label>
+					<input type="date" class="form-control mb-2 mr-sm-2" name="arrival">
+					<label for="Departure" class="mr-sm-2">Departure Date:</label>
+					<input type="date" class="form-control mb-2 mr-sm-2" name="departure">
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<h3>which attraction sites are you planning to visit</h3>
+					</div>
+					{% for site in sites%}
+					<div class="col-md-3">
+						<div class="form-check">
+							<label class="form-check-label">
+								<input class="form-check-input" type="checkbox" value="{{site.id}}">{{ site.name}}{{ ' '}}{{site.location}}
+							</label>
+						</div>
+					</div>
+					{% endfor%}
+			</div>
+			<div class="row">
+					<div class="col-md-12">
+						<h3>what activities are you planning to undertake </h3>
+					</div>
+					{% for a in activities%}
+					<div class="col-md-3">
+						<div class="form-check">
+							<label class="form-check-label">
+								<input class="form-check-input" type="checkbox" value="{{site.id}}">{{ a.activityName}}{{ ' '}}{{a.location}}
+							</label>
+						</div>
+					</div>
+					{% endfor%}
+			</div>
+			<div class="row">
+					<div class="col-md-12">
+						<h3>which events are you planning to attend? </h3>
+					</div>
+					{% for e in events %}
+					<div class="col-md-3">
+						<div class="form-check">
+							<label class="form-check-label">
+								<input class="form-check-input" type="checkbox" value="{{site.id}}">{{ e.eventName}}{{ ' '}}{{e.event_location}}
+							</label>
+						</div>
+					</div>
+					{% endfor%}
+			</div>
+
+		</form>
+	</div>
+</div>
+<div class="col-md-1">
+
+</div>
+</div>
+{% endblock %}
+{% block js %}
+{% endblock %}

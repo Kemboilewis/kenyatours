@@ -1,0 +1,117 @@
+<style type="text/css">
+    h2{
+        text-transform: uppercase;
+        color: green;
+    }
+</style>
+{% if all_tours %}
+<h2 class="text-center mt-5">completed tours</h2>
+<div class="table-responsive-sm">          
+  <table class="table table-bordered table-hover">
+    <thead class="thead-light">
+      <tr>
+        <th>#</th>
+        <th>Tour Guide</th>
+        <th>arrival date</th>
+        <th>departure date</th>
+        <th>stay time</th>
+        <th>Instructions</th>
+        <th>Sites</th>
+        <th>Activities</th>
+        <th>Events</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for l in all_tours %}
+      <tr>
+        <td>1</td>
+        <td>{{ l.touristguide.firstname }}{{ ' '}}{{ l.touristguide.secondname }}</td>
+        <td>{{ l.arrival }}</td>
+        <td>{{ l.departure }}</td>
+        <td>{{ l.staytime }}</td>
+        <td>{{ l.instructions }}</td>
+        <td>
+            <ol>
+                {% for x in l.sites.all  %}
+            
+                <li>{{ x.name }}</li>
+
+                {% endfor %}
+            </ol>
+        </td>
+        <td>
+            <ol>
+                {% for y in l.activities.all  %}
+                <li>{{ y.activityName }}</li>
+                {% endfor %}
+            </ol>
+        </td>
+        <td>
+            <ol>
+                {% for z in l.events.all  %}
+                <li>{{ z.eventName }}</li>
+                {% endfor %}
+            </ol>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  </div>
+  {% else %}
+  <h2 class="text-center mt-5">completed tours</h2>
+<div class="table-responsive-sm">          
+  <table class="table table-bordered table-hover">
+    <thead class="thead-light">
+      <tr>
+        <th>#</th>
+        <th>Tourist</th>
+        <th>arrival date</th>
+        <th>departure date</th>
+        <th>stay time</th>
+        <th>Instructions</th>
+        <th>Sites</th>
+        <th>Activities</th>
+        <th>Events</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for l in guide_tours %}
+      <tr>
+        <td>1</td>
+        <td>{{ l.tourist.profile.firstname }}{{ ' '}}{{ l.tourist.profile.secondname }}</td>
+        <td>{{ l.arrival }}</td>
+        <td>{{ l.departure }}</td>
+        <td>{{ l.staytime }}</td>
+        <td>{{ l.instructions }}</td>
+        <td>
+            <ol>
+                {% for x in l.sites.all  %}
+            
+                <li>{{ x.name }}</li>
+
+                {% endfor %}
+            </ol>
+        </td>
+        <td>
+            <ol>
+                {% for y in l.activities.all  %}
+                <li>{{ y.activityName }}</li>
+                {% endfor %}
+            </ol>
+        </td>
+        <td>
+            <ol>
+                {% for z in l.events.all  %}
+                <li>{{ z.eventName }}</li>
+                {% endfor %}
+            </ol>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  </div>
+  {% endif %}
+
+    

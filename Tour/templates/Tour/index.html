@@ -1,0 +1,94 @@
+    {% extends 'Tour/base.html' %}
+    {% load static %}
+    {% block css %}
+    <style>
+
+        #intronote{
+            width: 400px;
+            padding: 40px;
+            position:absolute;
+            margin-top:160px;
+            left:50%;
+            transform: translate(-50%,-50%);
+            background: #ffff;
+            text-align: center;
+            border-radius: 34px;
+            padding-top: 150px;
+        }
+        .card{
+            width: 18rem;
+            height:25rem auto;
+            background-color: #ebeef8;
+            align-items: center;
+            justify-content: center;
+            margin: 3rem 0;
+            box-shadow: .5rem .5rem 3rem rgba(0,0,0,0.2);
+
+        }
+        .col-md-3{
+            margin-right: 1rem;
+        }
+        .card .card-img{
+            width: 100%;
+            height:15rem;
+            object-fit: cover;
+            :webkit-clip-path:polygon[0 0,100% 0,100% 70%,0% 100%];
+            clip-path: polygon(0 0,100% 0,100% 73%, 0% 100%);
+        }
+        .profile-img{
+            left:50%;
+            width: 15rem;
+            height: 15rem;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-top: -10rem;
+            z-index: 999;
+            border: 1rem solid #ebeef8;
+        }
+        .card span{
+            font-style: italic;
+            margin-top:-2rem;
+        }
+        .about{
+           margin:4px;
+           text-align: center;
+        }
+        /**/
+        .admin_link{
+            margin-left: 80%;
+            background-color:rgb(0,100,0); 
+            text-decoration: none;
+            color:goldenrod;
+        } 
+
+    </style>
+
+    {% endblock %}
+    {%  block content%}
+    <a href="{% url 'admin:index' %}" class="admin_link btn mt-2">Staff login</a>  
+        <div class="button-box" >
+            <div id="btn"></div>
+            <button type="button" class="toggle-btn" onclick="login();return false;">Login</button>
+            <!--<button type="button" class="toggle-btn" style="background-color: red;">register</button>-->
+            <button type="button" class="toggle-btn text-center " style="background-color: darkgreen; border: none; text-align:left; border-radius: 48px; color: red;font-weight: bolder;margin-left: 26px;padding-left: 11em; padding-right: 2px;" onclick="register();return false;">Register</button>
+        </div>
+         <!-- the target div where registration and login page is loaded-->
+        <div id="show"></div>
+    {% endblock %}
+    {% block js %}
+       
+        <script type="text/javascript">
+            /* jquery document ready function */
+            $(document).ready(function(){
+                $('#show').load('{% url 'Tour:login' %}')
+            });
+            /* javascripts login function which loads the login template when login button is clicked*/
+            function login() {
+                 $('#show').load('{% url 'Tour:login' %}');
+             }
+             /* javascripts register function which loads registration page when register function is clicked*/
+             function register() {
+                 $('#show').load('{% url 'Tour:register' %}');
+             }
+        </script>
+    {% endblock %}

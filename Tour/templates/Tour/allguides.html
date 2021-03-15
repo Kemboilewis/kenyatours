@@ -1,0 +1,15 @@
+{% extends 'Tour/base.html' %}
+{% load static %}
+{% block css %}
+
+{% endblock %}
+{% block content %}
+{% for c in allguides %}
+<div>{{ c }}
+  <a href="{% url 'Tour:guidepdf' c.pk %}"><button class="btn btn-primary">pdf</button></a><br>
+  <hr>
+</div>
+{% endfor %}
+{% endblock %}
+{% block js %}
+{% endblock %}

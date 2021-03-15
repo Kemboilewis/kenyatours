@@ -1,0 +1,104 @@
+    {% extends 'Tour/base.html' %}
+    {% load static %}
+
+    {% block content %}
+     <div class="d-flex justify-content-center mt-0 pt-3 ">
+                      <h4 class="service " style="text-align: center;" >For safe, Convenient and Effective Tour Experience</h4>
+                    </div>
+                    <div class="d-flex justify-content-center ">
+                      <p class="service" style="text-align: center;" >Your happiness is our priority</p>
+                    </div>
+        <div>
+            <div class="container-fluid">
+                <div class="row" style="margin:30px;">
+                    <div class="mx-auto">
+                        <h4 class="search_title">Search for Hotel here</h4>
+                        <form class="form-inline mx-auto" action="#" method="POST">
+                           {% csrf_token %}
+                            <span class="btn-label btn-label-right"><i class="fa fa-search fa-2x"></i></span>
+                            <input name="q" type="text" placeholder="Type hotel name" class="form-control " id="input_field">
+                            <button type="" class="btn btn-success ml-1 btn-search" id="submit_search">Submit</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="row" id="search_results"></div>
+            </div>
+            <div>
+
+            </div>
+        </div>
+        <section class="section">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <a class="dashboard-stat bg-primary" href="{% url 'Tour:hotels' %}">
+                            <span class="number counter">65</span>
+                            <span class="name">Accomodation spots</span>
+                            <span class="bg-icon"><i class="fa fa-hotel"></i></span>
+                        </a>
+                        <!-- /.dashboard-stat -->
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" style="color: blue !important;">
+                        <a class="dashboard-stat bg-success " href="{% url 'Tour:sites' %}" style="background-color: ">
+                            <span class="number counter">25</span>
+                            <span class="name">Game Parks</span>
+                            <span class="bg-icon"><i class="fa fa-dove"></i></span>
+                        </a>
+                        <!-- /.dashboard-stat -->
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <a class="dashboard-stat bg-danger" href="{% url 'Tour:guide' %}">
+                            <span class="number counter">20</span>
+                            <span class="name">Tour Guides</span>
+                            <span class="bg-icon"><i class="fa fa-users"></i></span>
+                        </a>
+                        <!-- /.dashboard-stat -->
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <a class="dashboard-stat bg-warning" href="{% url 'Tour:all_events' %}">
+                            <span class="number counter">30</span>
+                            <span class="name">events to attend</span>
+                            <span class="bg-icon"><i class="fa fa-music"></i></span>
+                        </a>
+                        <!-- /.dashboard-stat -->
+                    </div>
+                </div>
+            </div>
+                <div class="col-md-auto mx-auto mt-5">
+                    <h3 style="text-decoration: underline;color: #000000;font-weight: bolder;">NEWS UPDATES</h3>
+                </div>
+                <div class="row mb-5">
+                    {% for new in news %}
+                        <div class="col-md-4 mx-auto">
+                            <div class="card news_card">
+                                <img class="card-img-top" src="{{ new.image.url }}" alt="Card image" >
+                                {%if new.posted_today %}
+                                   <span class="badge badge-dark" style="margin-top: -55px;">NEW</span>
+                                {% endif %}
+                                <div class="card-body">
+                                    <p class="dupload">{{ new.date_uploaded }}</p>
+                                    <h4 class="card-title" style="color:mediumseagreen">{{ new.headline}}</h4>
+                                    <p class="card-text">{{ new.text }}</p>
+                                    <a href="#" class="btn btn-primary" id="readmore">Read More</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+        </section>
+
+
+    {% endblock %}
+    {% block js %}
+    <script type="text/javascript">
+        var input_field = document.getElementById('input_field');
+        $(document).ready(function(){
+            $("#submit_search").click(function(){
+                &("#search_results").load("{% url 'Tour:search_shortcut' %}",{input_field: input_field.value });
+                return false;
+            });
+        });
+        
+    </script>
+    
+    {% endblock %}

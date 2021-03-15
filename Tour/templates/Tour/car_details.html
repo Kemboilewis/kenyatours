@@ -1,0 +1,28 @@
+		{% extends 'Tour/base.html' %}
+		{% load static %}
+		{% block content %}
+		<div class="card" style="background-color: #ebeef8;width: 50%">
+				<div class="card-header ">
+					<img class="card-img-top" src="{{ car.car_image.url }}" alt="Card image">
+				<div class="card-body">
+					<h4 class="card-title" style="color:mediumseagreen">{{ car.name}}</h4>
+		            <p class="card-text">{{ car.price }}</p>
+					<div class="card-link">
+					<a href="#"class="btn btn-primary" id="read More">BOOK</a>
+					<div class="card-link">
+					<form method="POST" action="{% url 'Tour:book_car' %}">
+						{% csrf_token %}
+						<input type="hidden" name="car_id" value="{{ car.id }}">
+				        <label for="town">town</label>
+				        <input type="text" name="town"  class="form-control" placeholder="town">
+				        <label for="text" >any specifications</label>
+				        <textarea type="text" name="instructions" class="form-control" placeholder="Type reply here"></textarea>
+				        <button type="submit" class="btn btn-success">send</button>
+					</form>
+				</div>
+				</div>
+				</div>
+				
+		</div>
+		</div>
+		{% endblock %}

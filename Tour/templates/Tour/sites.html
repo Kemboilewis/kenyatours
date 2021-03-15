@@ -1,0 +1,63 @@
+{% extends 'Tour/base.html'%}
+{% load static %}
+{% block content %}
+<div id="accordion">
+<div class="card">
+	<div class="card-header bg-success">
+		<a class="card-link" data-toggle="collapse" href="#wildlife" style="color: #f8f9fa;">WILDLIFE</a>
+	</div>
+	<div class="collapse show" id="wildlife" data-parent="#accordion">
+		<div class="card body">
+			<div class="row container-fluid">
+				<div class="col-md-3">1</div>
+				<div class="col-md-3">2</div>
+				<div class="col-md-3">3</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="card" style="margin-top: -20px;">
+	<div class="card-header">
+		<a class="collapsed card-link" data-toggle="collapse" href="#marinelife">MARINE LIFE AND BEACHES</a>
+	</div>
+	<div class="collapse" id="marinelife"  data-target="#accordion">
+		<div class="card-body">
+			<div class="row">
+				<div class="col-md-3"></div>
+				<div class="col-md-3"></div>
+				<div class="col-md-3"></div>
+			</div>
+		</div>
+	</div>
+
+</div>
+<div class="card" style="margin-top: -20px;">
+	<div class="card-header">
+		<a class="collapsed card-link" href="#waterfalls" data-toggle="collapse">WATERFALLS</a>
+	</div>
+	<div class="collapse" id="waterfall" data-target="#accordion">
+		<div class="card-body">
+			<div class="row">
+				<div class="col-md-3"></div>
+				<div class="col-md-3"></div>
+				<div class="col-md-3"></div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="card" style="margin-top: -20px;">
+	<div class="card-header">
+		<a class="collapsed card-link" href="#naturalsceneries" data-toggle="collapse"> NATURAL SCENERIES</a>
+	</div>
+	<div class="collapse" id="naturalsceneries" data-target="#accordion">
+		<div class="card-body">
+			<div class="row">
+				<div class="col-md-3"></div>
+			    <div class="col-md-3"></div>
+			    <div class="col-md-3"></div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+{% endblock %}

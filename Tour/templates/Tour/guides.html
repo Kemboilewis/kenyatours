@@ -1,0 +1,330 @@
+    {% extends 'Tour/base.html' %}
+    {% load static %}
+    {% block css %}
+    <style>
+           .messages{
+            text-align: center;
+            padding-top: 10px;
+            font-size: 20px;
+           } 
+           .guidepage{
+             padding-top: 13px;
+              padding-bottom: 13px;
+              border-radius: 24px;
+              text-decoration: none;
+              font-weight: bold;
+              font-size: 18px;
+              background-color: #87CEEB;
+              transition: 0.2s;
+              margin-right: 0;
+              color:#ffffff;
+
+           }
+           .guidepage:hover{
+            background-color: tomato;
+               color:black;
+           }
+           .guidepage a{
+              padding-top: 13px;
+              padding-bottom: 13px;
+              border-radius: 24px;
+              text-decoration: none;
+              font-weight: bold;
+              font-size: 18px;
+              background-color: #87CEEB;
+              transition: 0.2s;
+              margin-right: 0;
+              color:#ffffff;
+            }
+            .guidepage a:hover{
+               background-color: tomato;
+               color:black;
+           }
+           #tourist_guide_profile:hover{
+            opacity: 0.7;
+            cursor:pointer ;
+
+           }
+            
+    </style>
+{% endblock %}
+{% block content %}
+<!-- user type -guide page-->
+{% if user.profile.user_type == "GUIDE" %}
+<div class="row mt-2 mb-2 ml-0 mr-0 pl-0 pr-o">
+    <div class="col-md-4 btn " >
+        <a class="btn  w-75 guidepage" href="{% url 'Tour:guide' %}" ><i class="fa fa-users fa-1x" style="margin-right: 3px;"></i>available tour guides<span class="badge ml-2" style="font-size: 16px;background-color:blue; color:white; border-radius: 50%; ">{{ available_guides }}</span>
+        </a>
+    </div>
+    {% if new_request %}
+    <div class="col-md-4 btn " id="notificationform">
+        <div class="btn  w-75 guidepage" >new request<span class="badge badge-danger ml-2">{{ count }}</span></div>
+    </div>
+    {% else %}
+    <div class="col-md-4 btn " >
+        <div class="btn  w-75 guidepage" >new request:<span class="pl-1 text-danger">No request</span></div>
+    </div>
+    {% endif %}
+    <div class="col-md-4 btn " id="guidecompletedtours">
+        <div class="btn  w-75 guidepage">completed tours<span class="badge badge-danger ml-2" style="font-size: 16px;background-color:blue; color:white; border-radius: 50%; ">{{ guide_completed_tours }}</span></div>
+    </div>
+    
+</div>
+<div  id="guide_notification"></div>
+    <div class="row pl-0 ml-0 pr-0 mr-0 mt-3 mb-3" id="guidepagelist">
+        <div class="col-12 mt-2 mb-1">
+                    <h2 style="text-decoration: underline;" class="featured_header">Available Tour Guides:</h2>
+                </div>
+    {% for guide in guides %}
+    <div class="col-sm-3 w-75  mb-4" id="tourist_guide_profile">
+        <div class="guide_image">
+            <img src="{{ guide.profile_image.url }}" >
+        </div>
+        <div class="guide_info">
+            <h4  style="color: green;">{{ guide.firstname }} {{ ' ' }}{{ guide.secondname }}</h4>
+            <div class="d-inline-flex ">
+              <div class=" mr-5" style=""><i class="fa fa-map-marker-alt text-danger pr-1"></i>{{ guide.location }}</div>
+              <div class="p-1 "><span ><i class="fa fa-star text-warning pr-1"></i>4.9</span></div>
+            </div>
+            <p class="small" style="font-weight: bold;">{{ guide.languages }}</p>
+            <div class="d-inline-flex ">
+            {% if tourist_likes %}
+                <div class=" btn mr-2 small">{{ guide_likes }}<span class="text-primary pl-1" id="like{{ guide.id }}" data-catid="{{ guide.id }}"><i class="fa fa-thumbs-up fa-1x"></i>like</span></div>
+            {% else %}
+                <div class=" mr-2 small"><small>{{ guide_likes }}</small><span class=" likebutton btn text-body" id="like{{ guide.id }}" data-catid="{{ guide.id }}"><i class="fa fa-thumbs-up fa-1x"></i><small>like</small></span></div>
+            {% endif %}
+            <a class=" message_link pt-2 mr-2" href="#mymodal{{ guide.id }}" data-toggle="modal" > 
+                <span class=""><i class="fa fa-envelope pr-1"></i><small>message</small></span>  
+            </a>
+            <form autocomplete="off" action="{% url 'Tour:sending_toguide' %}" method="POST"> 
+                {% csrf_token %}
+                <input autocomplete="off" name="hidden" style="display: none;">
+            <div class="modal" id="mymodal{{ guide.id }}">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <div class="modal-title text-success">send a message</div>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-inline">
+                                <label for="receiver" class="mr-sm-2">send to:</label>
+                                <input autocomplete="off" type="text" class="form-control mb-2 mr-sm-2" name="receiver" placeholder="{{ guide.firstname }} {{ ' ' }}{{ guide.secondname }}" value="{{ guide.user.username }}">
+                            </div>
+                            <div class="form-inline">
+                                <label for="subject" class="mr-sm-2">subject:</label>
+                                <input type="text" class="form-control mb-2 mr-sm-2" name="subject">
+                            </div>
+                            <div class="form-group">
+                                <label for="text">message:</label>
+                                <textarea class="form-control" id="message" rows="4" name="message" ></textarea> 
+                             </div>
+                        </div>
+                        <div class="form-inline mb-3">
+                            <button type="submit" class="btn btn-success ml-4 " style="border-radius: 24px;">send</button>
+                            <button type="button" class=" btn button_close" data-dismiss="modal">close</button>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </form>
+              <div class="pb-2  "><a class="btn book_btn "href="#" style="color:white;text-decoration: none;">book</a></div>
+            </div>
+           
+
+<!-- The Modal -->
+
+            
+            
+        </div>
+        
+    </div>
+    {% endfor %}
+</div>
+
+<!-- user type -tourist page-->
+
+{% else %}
+   {% if messages %}
+      <div class=" messages">
+          {% for ms in messages %}
+          <div class="text-{{ms.tags}}">{{ ms }}</div>
+          {% endfor %}
+      </div>
+   {% endif %}
+<div class="row mt-4 mb-2 ml-0 mr-0 pl-0 pr-o" id="guidepage">
+    <div class="col-md-4 btn" id="available_guides">
+        <a class="btn w-100" href="{% url 'Tour:guide' %}" ><i class="fa fa-users fa-1x" style="margin-right: 3px;"></i>available tour guides<span class="badge" style="font-size: 16px;background-color:blue; color:white; border-radius: 50%; ">{{ available_guides }}</span></a>
+    </div>
+    {% if booking_status %}
+    <div class="col-md-4 btn "id="touristnotification">
+        {% for b in booking_status %}
+                {% if b.guide_response == 1 %}
+                <div class="btn w-100" >booking status:<span class="text-success">succesful</span></div>
+                {% elif b.guide_response == 2 %}
+                <div class="btn w-100" >booking status:<span class="text-danger">declined</span></div>
+                {% else %}
+                <div class="btn w-100" >booking status:<span class="text-warning">pending</span></div>
+                {% endif %}
+         
+         {% endfor %}
+    </div>
+    {% else %}
+    <div class="col-md-4 btn">
+        <div class=" btn w-100 notbooked">booking status:<span>Not yet booked</span></div>
+    </div>
+    {% endif %}
+    <div class="col-md-4 btn ">
+        <div class="btn   w-100" id="completedtours">completed tours<span class="badge" style="font-size: 16px;background-color:blue; color:white; border-radius: 50%; ">{{ completed_tours }}</span></div>
+    </div>
+</div>
+<div id="searchyourguide" class="d-flex justify-content-center mb-3 mt-3" >
+    <form class="form-inline" action="#"  >
+        <span class="btn-label btn-label-right " style="color:black;"><i class="fa fa-search  "></i></span>
+        <input  type="text" placeholder="search tour guide here" class="form-control" style="width: 60px;">
+    </form>
+</div>
+<div  id="readnotification" ></div>
+<div class="row pl-0 ml-0 pr-0 mr-0 mt-3 mb-3" id="tourguide_profiles">
+    <div class="col-12 mt-2 mb-1">
+                    <h2 style="text-decoration: underline;" class="featured_header">Available Tour Guides:</h2>
+                </div>
+    {% for guide in guides %}
+    <div class="col-md-3  w-75  mb-4">
+        <div class="guide_image">
+            <img src="{{ guide.profile_image.url }}" >
+        </div>
+        <div class="guide_info">
+            <h4  style="color: green;">{{ guide.firstname }} {{ ' ' }}{{ guide.secondname }}</h4>
+            <div class="d-inline-flex ">
+              <div class=" mr-5" style=""><i class="fa fa-map-marker-alt text-danger pr-1"></i>{{ guide.location }}</div>
+              <div class="p-1 "><span ><i class="fa fa-star text-warning pr-1"></i>4.9</span></div>
+            </div>
+            <p class="small" style="font-weight: bold;">{{ guide.languages }}</p>
+            <div class="d-inline-flex ">
+            {% if tourist_likes %}
+                <div class=" btn mr-2 small">{{ guide_likes }}<span class="text-primary pl-1" id="like{{ guide.id }}" data-catid="{{ guide.id }}"><i class="fa fa-thumbs-up fa-1x"></i>like</span></div>
+            {% else %}
+                <div class=" mr-2 small"><small>{{ guide_likes }}</small><span class=" likebutton btn text-body" id="like{{ guide.id }}" data-catid="{{ guide.id }}"><i class="fa fa-thumbs-up fa-1x"></i><small>like</small></span></div>
+            {% endif %}
+            <a class=" message_link pt-2 mr-2" href="#mymodal{{ guide.id }}" data-toggle="modal" > 
+                <span class=""><i class="fa fa-envelope pr-1"></i><small>message</small></span>  
+            </a>
+            <form autocomplete="off" action="{% url 'Tour:sending_toguide' %}" method="POST"> 
+                {% csrf_token %}
+                <input autocomplete="off" name="hidden" style="display: none;">
+            <div class="modal" id="mymodal{{ guide.id }}">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <div class="modal-title text-success">send a message</div>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-inline">
+                                <label for="receiver" class="mr-sm-2">send to:</label>
+                                <input autocomplete="off" type="text" class="form-control mb-2 mr-sm-2" name="receiver" placeholder="{{ guide.firstname }} {{ ' ' }}{{ guide.secondname }}" value="{{ guide.user.username }}">
+                            </div>
+                            <div class="form-inline">
+                                <label for="subject" class="mr-sm-2">subject:</label>
+                                <input type="text" class="form-control mb-2 mr-sm-2" name="subject">
+                            </div>
+                            <div class="form-group">
+                                <label for="text">message:</label>
+                                <textarea class="form-control" id="message" rows="4" name="message" ></textarea> 
+                             </div>
+                        </div>
+                        <div class="form-inline mb-3">
+                            <button type="submit" class="btn btn-success ml-4 " style="border-radius: 24px;">send</button>
+                            <button type="button" class=" btn button_close" data-dismiss="modal">close</button>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </form>
+              <div class="pb-2 "><a class="btn book_btn "href="{% url 'Tour:bookform' guideid=guide.id %}" style="color:white;text-decoration: none;">book</a></div>
+            </div>
+           
+
+<!-- The Modal -->
+
+            
+            
+        </div>
+        
+    </div>
+    {% endfor %}
+</div>
+
+
+{% endif %}
+    {% endblock %}
+    {% block js %}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            /*$("#subscribe").click(function(){
+                /*$("#allguides").hide();*/
+               /* $(".guideform").css("display","block");
+            });*/
+            $("#myModal").on("hidden.bs.modal",function(){
+                $("this").modal('dispose');
+            });
+            /* a jquery function for loading the new request of a guide */
+            $("#notificationform").click(
+                    function() {
+                           $("#guidepagelist").hide();
+                           /*$("#allguides").hide();*/
+                           /*$("#read").hide();*/
+                           $("#guide_notification").load("{% url 'Tour:readnotification' %}");
+                           return false;
+                 }
+                );
+            /*jquery function for loading the tourist guide completed tours*/
+            $("#guidecompletedtours").click(
+                    function() {
+                           $("#guidepagelist").hide();
+                           $("#guide_notification").load("{% url 'Tour:completedtours' %}");
+                           return false;
+                 }
+                );
+            /* a jquery function for loading the booking status button when clicked*/
+            $("#touristnotification").click(
+                    function() {
+                           $("#searchyourguide").hide();
+                           $("#tourguide_profiles").hide();
+                           $("#readnotification").load("{% url 'Tour:readnotification' %}");
+                           return false;
+                 }
+                );
+            /* jquery function for loading the completed tours button*/
+            $("#completedtours").click(
+                    function() {
+                           $("#tourguide_profiles").hide();
+                           /*$("#read").hide();*/
+                           $("#readnotification").load("{% url 'Tour:completedtours' %}");
+                           return false;
+                 }
+                );
+            /*implementing the like button */
+            $(".likebutton").click(function(){
+                var id;
+                id = $(this).attr("data-catid");
+                $.ajax({
+                    type:"GET",
+                    url:"{% url 'Tour:like_guide' %}",
+                    data:{ guideid:id },
+                    success: function(data) {
+                        $('#like'+ id).removeClass('text-body');
+                        $('#like'+ id).addClass('text-primary');
+                    }
+                });
+            });
+
+
+            /*$('[data-toggle="tooltip"]').tooltip();*/
+            
+        });
+    </script>
+    {% endblock %}

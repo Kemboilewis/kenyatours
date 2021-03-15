@@ -1,0 +1,61 @@
+{% extends 'Tour/base.html' %}
+{% load static %}
+{% block css %}
+<style type="text/css">
+div .activities_header{
+  color: white;
+  margin-top: 0px;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  text-decoration: none;
+  transform: translate(10px, 10px);
+  transform: scale(1,1);
+  text-align: center;
+  background: linear-gradient(to right,#FF0000,#FFDAB9);
+
+}
+div .activities_header h1{
+  color: green;
+  font-style: italic;
+  font-size: 50px;
+  text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;
+  text-decoration: none;
+  font-weight: bolder;
+  padding:30px 0px 0px;
+}
+div .activities_header p{
+  text-align: center;
+  font-size: 14px;
+  padding: 0px 20px 20px;
+  font-style: normal;
+  font-weight: normal;
+  color: black;
+}
+</style>
+{% endblock %}
+{% block content %}
+<div class="activities_header ">
+  <h1>activities</h1>
+    <p>The incredibel diversity of landscapes, cultures, wildlife and activities mean endless opportunities for visitors to Kenya. Kenya offers a diverse range of environment all within relatively close prosimity ot one another, and has excellent domestic travel infrastructure. Kenya's rich diversity of wildlife meand that no two experiences in wildlife are ever the same.Visitors to Kenya can experience and see completely different things. In a single trip to kenya, you can visit tripical forests, beautiful beaches , and deserts, climb mounyains and explore the wild. In Kenya, it is possible to plan a safari that blends adventure and relaxation, luxury and natural simplicity, social experiences and solitude </p>
+         
+</div>
+	<div class="row">
+    {% for l in all_activities %}
+		<div class="col-md-3 mb-3 ">
+      <div class="hoverimage">
+      <img src="{{ l.activity_image}}" alt="image" class="image">
+      <div class="overlay" style="background: linear-gradient(to right,#FF0000,#FFDAB9); ">
+        <div class="text" style="color: darkgreen;">{{ l.activityName }}<br><span style="color: red;"><i class="fa fa-tint fa-rotate-180 "></i></span>{{l.location }}</div><br>
+
+
+       </div>
+    </div>  
+		</div>
+    {% endfor %}
+		
+  
+</div>
+
+
+{% endblock %}
+{% block js %}
+{% endblock %}

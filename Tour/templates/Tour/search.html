@@ -1,0 +1,17 @@
+{% extends 'Tour/base.html'%}
+{% block css %}
+{% endblock %}
+{% block content %}
+<div class="">
+<h1 style="color: black;">search results</h1>
+<ul>
+	{% for hotel in object_list %}
+	<a href="{% url '%}">
+	  <li style="color: black;">{{ hotel.hotel_name }}, {{ hotel.town }}</li>
+	</a>
+	{% endfor %}
+</ul>
+</div>
+{% endblock %}
+{% block js %}
+{% endblock %}

@@ -1,0 +1,236 @@
+{% extends 'Tour/base.html' %}
+{% block meta %}
+<meta http-equiv="refresh" content="45"/>
+{% endblock %}
+{% block css %}
+<style type="text/css">
+    .content_background{
+        border-radius: 24px;
+        background-color: #f8f9fa;
+        padding:44px 34px;
+    }
+    .message-wrapper{
+        background-color: #ebeef8;
+        border-radius: 34px;
+        padding:18px;
+    }
+    {box-sizing: border-box;}
+
+    /* Button used to open the contact form - fixed at the bottom of the page */
+    .open-button {
+        background-color: #555;
+        color: white;
+        padding: 16px 20px;
+        border: none;
+        cursor: pointer;
+        opacity: 0.8;
+        position: fixed;
+        bottom: 23px;
+        right: 28px;
+        width: 280px;
+    }
+
+    /* The popup form - hidden by default */
+    .reply-form {
+        display: none;
+        position: fixed;
+        bottom: 0;
+        right: 15px;
+        border: 3px solid #f1f1f1;
+        z-index: 9;
+    }
+
+    /* Add styles to the form container */
+    .form-container {
+        max-width: 300px;
+        padding: 10px;
+        background-color: white;
+    }
+
+    /* Full-width input fields */
+    .form-container input[type=text], .form-container input[type=password] {
+        width: 100%;
+        padding: 15px;
+        margin: 5px 0 22px 0;
+        border: none;
+        background: #f1f1f1;
+    }
+
+    /* When the inputs get focus, do something */
+    .form-container input[type=text]:focus, .form-container input[type=password]:focus {
+        background-color: #ddd;
+        outline: none;
+    }
+
+    /* Set a style for the submit/login button */
+    .form-container .btn {
+        background-color: #4CAF50;
+        color: white;
+        padding: 16px 20px;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        margin-bottom:10px;
+        opacity: 0.8;
+    }
+
+    /* Add a red background color to the cancel button */
+    .form-container .cancel {
+        background-color: red;
+    }
+
+    /* Add some hover effects to buttons */
+    .form-container .btn:hover, .open-button:hover {
+        opacity: 1;
+    }
+    /* styling the messages*/
+    .msg{
+        color:black;
+        background-color: #BFAFB2;
+        font-size: 16px;
+        opacity: 1.0;
+
+        
+    }
+    .msg:hover{
+        opacity: 0.5;
+    }
+
+    
+
+</style>
+{% endblock %}
+{% block content %}
+
+<div class="content_background">
+    <div class="row">
+        <div class="col-md-4">
+            <div>
+                <div class="card">
+                    <div class="card-header bg-primary">Send A message here</div>
+                    <div class="card-body">
+                        <form action="{% url 'Tour:sendmessage' %}" method="POST" class="form-group">
+                            {% csrf_token %}
+                            <div class="">
+                                {% for error in messages %}
+                                    <strong>{{ error }}</strong>
+                                {% endfor %}
+                                <br>
+                                <label >TO:</label>
+                                <select name="receiver" class="form-control">
+                                    <option>EVERYONE</option>
+                                    {% for user in users %}
+                                        <option>{{ user.username }} </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div>
+                                <label>Subject:</label>
+                                <input type="text" class="form-control" name="subject">
+                            </div>
+                            <div class="">
+                                <label>Message:</label>
+                                <textarea class="form-control" type="text" class="form-control" name="message"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                    <div class="card-footer">Email us on: Customercare@tt.go.ke</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="bg-primary" style="border-radius: 24px; padding: 5px;">
+                <h3 style="text-transform: uppercase; text-align: center;margin-bottom: 5px;">YOUR NEW MESSAGES
+                    <span class="badge badge-light">{{ count }}</span>
+                </h3>
+            </div>
+            <div id="readnow"></div>
+            <div class="message-wrapper" id="mymessages">
+                <div class="bg-light" id="listmessages" style="margin:-4px 20px 30px 25px;">
+                    {% if msg %}
+                        {% for message in msg %}
+                        {% if message.message_status == False %}
+                        <div class="row font-weight-bold bg-success border border-success " id="message">
+                            <div value="{{ message.id }}" type="hidden" id="id"></div>
+                            <div class="col-md-2">{{ message.sender }}</div>
+                            <div class="col-md-6">{{ message.subject }}</div>
+                            <div class="col-md-4">{{ message.date_sent }}</div>
+                        </div>
+                        {% else %}
+                        <div class=" row p-2 border border-success" id="message">
+                            <div class="col-md-2">{{ message.sender }}<button class="btn btn-success">read</button> </div>
+                            <div class="col-md-6">{{ message.subject }}</div>
+                            <div class="col-md-4">{{ message.date_sent }}</div>
+                        </div>
+                        {% endif %}
+                        
+                            
+                        
+                        <!--<form method="post">
+                            {% csrf_token %}
+                            <select type="hidden" id="mes_id">
+                                <option>{{message.id}}</option>
+                         
+                           </select> 
+                        <a>
+                        <button  class="bg-light" type="submit" id="readmessage" style="text-decoration: none; outline: none;" data-catid="{{message.id}}" >
+                            <div class="msg">
+                                {% if message.message_status == False %}
+                                <div class="row p-2 font-weight-bold rounded border border-light " >
+                                    <div class="col-md-3 " >{{ message.sender }}
+                                            <h3 id="mid">{{ message.id }}</h3>
+                                    </div>
+                                    <div class="col-md-9 " style="text-align: center;">{{ message.date_sent}}<br>
+                                    {{ message.subject}}</div>
+                                     <button class=" col-md-1 btn btn-success" type="button" message_id="{{ message.id }}" id="readmsg"> read</button> -
+                                </div>
+                                {% else %}
+                                <div class="row p-3 border border-light" style="background-color: #ebeef8;">
+                                    <div class="col-md-3 " >{{ message.sender }}</div>
+                                    <div class="col-md-9 " style="text-align: center;">{{ message.date_sent}}<br></div>
+                                    {{ message.subject}}
+                                    <button class=" col-md-1 btn btn-success" type="button" message_id="{{ message.id }}" id="readmsg"> read</button> 
+                                </div>
+                
+                                {% endif %}
+                            </div>
+                        </button>
+
+                            </form>-->
+                       {% endfor %}
+                    {% else %}
+                        <p>No new Messages Yet</p>
+                    
+                    {% endif %}
+                </div>
+            </div>
+            
+        </div>
+        <div class="col-md-4" id="#read">
+        </div>
+</div>
+{% endblock %}
+{% block js %}
+<script>
+var id= document.getElementById('id').value;
+ $(document).ready(
+        function() {
+            //when the user clicks on the submit button, we load the url and pass the town value
+            //the user entered in the input
+
+            $("#message").click(
+                function() {
+                        $("#read").load("{% url 'Tour:message_view' %}", {
+                        id:id
+                    });
+                    return false;
+                }
+            );
+
+        }
+    );
+
+</script>
+{% endblock %}
+

@@ -1,0 +1,41 @@
+    <div class="row">
+        <div class="col-md-2">
+
+        </div>
+        <div class="col-md-8">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th class="text-center" colspan="7">
+                        Showing Results For :<span style="color: green">{{ hotel_name }}</span>
+                    </th>
+                </tr>
+                <tr>
+                    <th>Hotel Name</th>
+                    <th>Location:</th>
+                    <th>Town:</th>
+                    <th>Price Per Night:</th>
+                    <th>Website:</th>
+                    <th>Interested</th>
+                    <th>Book</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for hotel in available_hotels %}
+                    <tr>
+                        <td>{{ hotel.hotel_name }}</td>
+                        <td>{{ hotel.location }}</td>
+                        <td>{{ hotel.town }}</td>
+                        <td>{{ hotel.price }}</td>
+                        <td><a href="{{ hotel.website }}">{{ hotel.website }}</a></td>
+                        <td><button class="btn btn-warning btn-group-lg">Interested</button></td>
+                        <td><button class="btn btn-success btn-group-lg">Book</button></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-2">
+
+        </div>
+    </div>

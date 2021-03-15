@@ -1,0 +1,20 @@
+<!Doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>your trip details</title>
+	</head>
+	<body>
+		<div>{{ your_booking }}
+			<hr>
+			{{ your_booking.touristguide.firstname }} {{ ' ' }}{{ your_booking.touristguide.secondname }}
+			{{ your_booking.firstname }}
+			<hr>
+			{{ your_booking.touristguide.gender }}
+			<br>
+			<img src="{{your_booking.touristguide.profile_image.url }}" height='200px'>
+			<img src="{{ your_booking.profile_image.path }}" height='200px'>
+			
+		</div>
+	</body>
+</html>

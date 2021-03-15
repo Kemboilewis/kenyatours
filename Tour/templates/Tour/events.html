@@ -1,0 +1,65 @@
+{% extends 'Tour/base.html' %}
+{% load static %}
+{% block css %}
+<style type="text/css">
+div .events_header{
+  color: white;
+  margin-top: 0px;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  text-decoration: none;
+  transform: translate(10px, 10px);
+  transform: scale(1,1);
+  text-align: center;
+  background: linear-gradient(to right,#FFD700,#FFFACD);
+
+}
+div .events_header h1{
+  color: green;
+  font-style: italic;
+  font-size: 50px;
+  text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;
+  text-decoration: none;
+  font-weight: bolder;
+  padding:30px 0px 0px;
+}
+div .events_header p{
+  text-align: center;
+  font-size: 14px;
+  padding: 0px 20px 20px;
+  font-style: normal;
+  font-weight: normal;
+  color: black;
+}
+</style>
+{% endblock %}
+{% block content %}
+
+<div class="events_header ">
+  <h1>events</h1>
+  <p> The merry characteristics of Kenyans can simply be described as jolly.Kenyans love to celebrate and have fun.Kenyan festivals feature our vibrant culture, our heritage and most importantly our pride.
+  Come engage in different events and festivals that bring life to the streets of hosting cities and towns</p>
+         
+</div>
+	<div class="row mb-3">
+    {% for k in all_events %}
+		<div class="col-md-3 mb-3 mt-3">
+      <div class="hoverimage">
+      <img src="{{ k.event_image}}" alt="image" class="image">
+      <div class="overlay" style="background: linear-gradient(to right,#FFD700,#FFFACD); ">
+        <div class="text"style="color: darkgreen;">{{ k.eventName }}<br><span style="color: red;"><i class="fa fa-tint fa-rotate-180 "></i></span>{{k.event_location }}</div><br>
+
+
+       </div>
+    </div>  
+		</div>
+    {% endfor %}
+		
+  
+</div>
+
+		
+
+
+{% endblock %}
+{% block js %}
+{% endblock %}
